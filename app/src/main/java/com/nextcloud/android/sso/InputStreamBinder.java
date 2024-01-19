@@ -42,6 +42,7 @@ import com.owncloud.android.lib.common.OwnCloudClientManager;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.EncryptionUtils;
+import io.github.pixee.security.ObjectInputFilters;
 
 import org.apache.commons.httpclient.HttpConnection;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -222,6 +223,7 @@ public class InputStreamBinder extends IInputStreamService.Stub {
     private <T extends Serializable> T deserializeObjectAndCloseStream(InputStream is) throws IOException,
         ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(is);
+        ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
         T result = (T) ois.readObject();
         is.close();
         ois.close();
