@@ -66,6 +66,7 @@ import com.owncloud.android.lib.resources.status.Problem;
 import com.owncloud.android.lib.resources.status.SendClientDiagnosticRemoteOperation;
 import com.owncloud.android.operations.UploadException;
 import com.owncloud.android.utils.theme.CapabilityUtils;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.apache.commons.httpclient.HttpStatus;
 
@@ -1217,7 +1218,7 @@ public static String decryptStringSymmetricAsString(String string,
 
         List<String> lines = new ArrayList<>();
         String line;
-        while ((line = bufferedReader.readLine()) != null) {
+        while ((line = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
             lines.add(line);
         }
 

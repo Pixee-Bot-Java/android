@@ -24,6 +24,7 @@ package com.owncloud.android.ui.asynctasks;
 import android.os.AsyncTask;
 
 import com.owncloud.android.lib.common.utils.Log_OC;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class LoadingVersionNumberTask extends AsyncTask<String, Void, Integer> {
             URL url = new URL(args[0]);
             final Charset charset = Charset.defaultCharset();
             try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), charset))) {
-                return Integer.parseInt(in.readLine());
+                return Integer.parseInt(BoundedLineReader.readLine(in, 5_000_000));
 
             } catch (IOException e) {
                 Log_OC.e(TAG, "Error loading version number", e);

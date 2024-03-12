@@ -42,6 +42,7 @@ import com.owncloud.android.lib.common.OwnCloudClientManager;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.EncryptionUtils;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.apache.commons.httpclient.HttpConnection;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -503,10 +504,10 @@ public class InputStreamBinder extends IInputStreamService.Stub {
         try {
             StringBuilder total = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = reader.readLine();
+            String line = BoundedLineReader.readLine(reader, 5_000_000);
             while (line != null) {
                 total.append(line).append('\n');
-                line = reader.readLine();
+                line = BoundedLineReader.readLine(reader, 5_000_000);
             }
             return total.toString();
         } catch (Exception e) {

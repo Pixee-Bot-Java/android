@@ -88,6 +88,7 @@ import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.UriUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -155,7 +156,7 @@ public class FileOperationsHelper {
             br = new BufferedReader(fr);
 
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                 Matcher m = pattern.matcher(line);
                 if (m.find()) {
                     url = m.group(1);
