@@ -24,6 +24,8 @@ package third_parties.sufficientlysecure;
 
 import android.content.Context;
 import android.net.Uri;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -49,7 +51,7 @@ public class CalendarSource {
                           String password,
                           Context context) throws MalformedURLException {
         if (url != null) {
-            mUrl = new URL(url);
+            mUrl = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             mString = mUrl.toString();
         } else {
             mUri = uri;
@@ -68,7 +70,7 @@ public class CalendarSource {
             if (protocol.equalsIgnoreCase("ftp") || protocol.equalsIgnoreCase("ftps")) {
                 String external = mUrl.toExternalForm();
                 String end = external.substring(protocol.length() + HTTP_SEP.length());
-                return new URL(protocol + HTTP_SEP + userPass + "@" + end).openConnection();
+                return Urls.create(protocol + HTTP_SEP + userPass + "@" + end, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openConnection();
             }
 
             if (protocol.equalsIgnoreCase("http") || protocol.equalsIgnoreCase("https")) {
