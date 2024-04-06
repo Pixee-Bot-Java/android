@@ -41,6 +41,7 @@ import com.owncloud.android.datamodel.e2e.v1.encrypted.EncryptedFolderMetadataFi
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.e2ee.CsrHelper;
 import com.owncloud.android.utils.EncryptionUtils;
+import java.nio.file.Files;
 
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Rule;
@@ -854,7 +855,7 @@ public class EncryptionTestIT extends AbstractIT {
 
         EncryptedFile encryptedFile = encryptFile(file, key, iv);
 
-        File encryptedTempFile = File.createTempFile("file", "tmp");
+        File encryptedTempFile = Files.createTempFile("file", "tmp").toFile();
         FileOutputStream fileOutputStream = new FileOutputStream(encryptedTempFile);
         fileOutputStream.write(encryptedFile.getEncryptedBytes());
         fileOutputStream.close();
@@ -871,7 +872,7 @@ public class EncryptionTestIT extends AbstractIT {
                                             new ArbitraryDataProviderImpl(targetContext),
                                             user);
 
-        File decryptedFile = File.createTempFile("file", "dec");
+        File decryptedFile = Files.createTempFile("file", "dec").toFile();
         FileOutputStream fileOutputStream1 = new FileOutputStream(decryptedFile);
         fileOutputStream1.write(decryptedBytes);
         fileOutputStream1.close();

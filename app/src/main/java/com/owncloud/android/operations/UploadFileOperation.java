@@ -70,6 +70,7 @@ import com.owncloud.android.utils.MimeType;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.UriUtils;
 import com.owncloud.android.utils.theme.CapabilityUtils;
+import java.nio.file.Files;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.RequestEntity;
@@ -575,7 +576,7 @@ public class UploadFileOperation extends SyncOperation {
                 }
             }
 
-            File encryptedTempFile = File.createTempFile("encFile", encryptedFileName);
+            File encryptedTempFile = Files.createTempFile("encFile", encryptedFileName).toFile();
             FileOutputStream fileOutputStream = new FileOutputStream(encryptedTempFile);
             fileOutputStream.write(encryptedFile.getEncryptedBytes());
             fileOutputStream.close();
