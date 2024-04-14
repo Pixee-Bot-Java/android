@@ -49,6 +49,7 @@ import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.operations.CreateFolderOperation;
 import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.utils.FileStorageUtils;
+import java.nio.file.Files;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -287,7 +288,7 @@ public abstract class AbstractIT {
 
     protected File getFile(String filename) throws IOException {
         InputStream inputStream = getInstrumentation().getContext().getAssets().open(filename);
-        File temp = File.createTempFile("file", "file");
+        File temp = Files.createTempFile("file", "file").toFile();
         FileUtils.copyInputStreamToFile(inputStream, temp);
 
         return temp;
