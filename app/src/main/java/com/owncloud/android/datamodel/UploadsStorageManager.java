@@ -569,7 +569,7 @@ public class UploadsStorageManager extends Observable {
                               "==" + UploadResult.DELAYED_FOR_CHARGING.getValue() +
                               " OR " + ProviderTableMeta.UPLOADS_LAST_RESULT +
                               "==" + UploadResult.DELAYED_IN_POWER_SAVE_MODE.getValue() +
-                              " ) AND " + ProviderTableMeta.UPLOADS_ACCOUNT_NAME + "== ?",
+                              AND_1 + ProviderTableMeta.UPLOADS_ACCOUNT_NAME + "== ?",
                           accountName);
     }
 
@@ -588,7 +588,7 @@ public class UploadsStorageManager extends Observable {
             "==" + UploadResult.DELAYED_FOR_CHARGING.getValue() +
             " OR " + ProviderTableMeta.UPLOADS_LAST_RESULT +
             "==" + UploadResult.DELAYED_IN_POWER_SAVE_MODE.getValue() +
-            " ) AND " + ProviderTableMeta.UPLOADS_ACCOUNT_NAME + "== ?";
+            AND_1 + ProviderTableMeta.UPLOADS_ACCOUNT_NAME + "== ?";
         return getUploadPage(afterId, false, selection, accountName);
     }
 
@@ -605,7 +605,7 @@ public class UploadsStorageManager extends Observable {
                               "==" + UploadResult.DELAYED_FOR_CHARGING.getValue() +
                               " OR " + ProviderTableMeta.UPLOADS_LAST_RESULT +
                               "==" + UploadResult.DELAYED_IN_POWER_SAVE_MODE.getValue() +
-                              " ) AND " + ProviderTableMeta.UPLOADS_LAST_RESULT +
+                              AND_1 + ProviderTableMeta.UPLOADS_LAST_RESULT +
                               "!= " + UploadResult.VIRUS_DETECTED.getValue()
             , String.valueOf(UploadStatus.UPLOAD_FAILED.value));
     }
@@ -895,4 +895,6 @@ public class UploadsStorageManager extends Observable {
         }
 
     }
+    
+    private static final String AND_1 = " ) AND ";
 }

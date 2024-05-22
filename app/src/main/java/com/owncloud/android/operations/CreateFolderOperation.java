@@ -182,7 +182,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
                         token = null;
                     } else {
                         // TODO E2E: do better
-                        throw new RuntimeException("Could not unlock folder!");
+                        throw new RuntimeException(COULD_NOT_UNLOCK_FOLDER);
                     }
                 }
 
@@ -204,13 +204,13 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
                 }
             } else {
                 // revert to sane state in case of any error
-                Log_OC.e(TAG, remotePath + " hasn't been created");
+                Log_OC.e(TAG, remotePath + HASN_T_BEEN_CREATED);
             }
 
             return result;
         } catch (Exception e) {
             if (!EncryptionUtils.unlockFolderV1(parent, client, token).isSuccess()) {
-                throw new RuntimeException("Could not clean up after failing folder creation!", e);
+                throw new RuntimeException(COULD_NOT_CLEAN_UP_AFTER_FAILING_FOLDER_CREATION, e);
             }
 
             // remove folder
@@ -224,7 +224,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
                 ).execute(client);
 
                 if (!removeResult.isSuccess()) {
-                    throw new RuntimeException("Could not clean up after failing folder creation!");
+                    throw new RuntimeException(COULD_NOT_CLEAN_UP_AFTER_FAILING_FOLDER_CREATION);
                 }
             }
 
@@ -237,7 +237,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
 
                 if (!unlockFolderResult.isSuccess()) {
                     // TODO E2E: do better
-                    throw new RuntimeException("Could not unlock folder!");
+                    throw new RuntimeException(COULD_NOT_UNLOCK_FOLDER);
                 }
             }
         }
@@ -321,7 +321,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
                     token = null;
                 } else {
                     // TODO E2E: do better
-                    throw new RuntimeException("Could not unlock folder!");
+                    throw new RuntimeException(COULD_NOT_UNLOCK_FOLDER);
                 }
 
                 RemoteOperationResult remoteFolderOperationResult = new ReadFolderRemoteOperation(encryptedRemotePath)
@@ -342,7 +342,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
                 }
             } else {
                 // revert to sane state in case of any error
-                Log_OC.e(TAG, remotePath + " hasn't been created");
+                Log_OC.e(TAG, remotePath + HASN_T_BEEN_CREATED);
             }
 
             return result;
@@ -350,7 +350,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
             // TODO remove folder
 
             if (!EncryptionUtils.unlockFolder(parent, client, token).isSuccess()) {
-                throw new RuntimeException("Could not clean up after failing folder creation!", e);
+                throw new RuntimeException(COULD_NOT_CLEAN_UP_AFTER_FAILING_FOLDER_CREATION, e);
             }
 
             // remove folder
@@ -363,7 +363,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
                                                                                             true).execute(client);
 
                 if (!removeResult.isSuccess()) {
-                    throw new RuntimeException("Could not clean up after failing folder creation!");
+                    throw new RuntimeException(COULD_NOT_CLEAN_UP_AFTER_FAILING_FOLDER_CREATION);
                 }
             }
 
@@ -376,7 +376,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
 
                 if (!unlockFolderResult.isSuccess()) {
                     // TODO E2E: do better
-                    throw new RuntimeException("Could not unlock folder!");
+                    throw new RuntimeException(COULD_NOT_UNLOCK_FOLDER);
                 }
             }
         }
@@ -483,7 +483,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
             createdRemoteFolder = (RemoteFile) remoteFolderOperationResult.getData().get(0);
             saveFolderInDB();
         } else {
-            Log_OC.e(TAG, remotePath + " hasn't been created");
+            Log_OC.e(TAG, remotePath + HASN_T_BEEN_CREATED);
         }
 
         return result;
@@ -500,7 +500,7 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
         if (result.isSuccess()) {
             saveFolderInDB();
         } else {
-            Log_OC.e(TAG, remotePath + " hasn't been created");
+            Log_OC.e(TAG, remotePath + HASN_T_BEEN_CREATED);
         }
     }
 
@@ -540,4 +540,10 @@ public class CreateFolderOperation extends SyncOperation implements OnRemoteOper
     public String getRemotePath() {
         return remotePath;
     }
+    
+    private static final String COULD_NOT_UNLOCK_FOLDER = "Could not unlock folder!";
+    
+    private static final String HASN_T_BEEN_CREATED = " hasn't been created";
+    
+    private static final String COULD_NOT_CLEAN_UP_AFTER_FAILING_FOLDER_CREATION = "Could not clean up after failing folder creation!";
 }

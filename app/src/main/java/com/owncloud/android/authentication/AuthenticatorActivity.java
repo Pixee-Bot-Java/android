@@ -611,9 +611,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             } else if (value.startsWith("password" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
                 loginUrlInfo.password = URLDecoder.decode(
                     value.substring(("password" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length()));
-            } else if (value.startsWith("server" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
+            } else if (value.startsWith(SERVER + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
                 loginUrlInfo.serverAddress = URLDecoder.decode(
-                    value.substring(("server" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length()));
+                    value.substring((SERVER + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length()));
             }
         }
 
@@ -1680,7 +1680,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         try {
             JSONObject jsonObject = new JSONObject(response);
 
-            String server = jsonObject.getString("server");
+            String server = jsonObject.getString(SERVER);
             String loginName = jsonObject.getString("loginName");
             String appPassword = jsonObject.getString("appPassword");
 
@@ -1723,4 +1723,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     public void onFailedSavingCertificate() {
         DisplayUtils.showSnackMessage(this, R.string.ssl_validator_not_saved);
     }
+    
+    private static final String SERVER = "server";
 }
