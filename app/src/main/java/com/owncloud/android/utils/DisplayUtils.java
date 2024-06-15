@@ -80,6 +80,7 @@ import com.owncloud.android.utils.glide.CustomGlideUriLoader;
 import com.owncloud.android.utils.svg.SvgDecoder;
 import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -620,7 +621,7 @@ public final class DisplayUtils {
         String line;
         StringBuilder text = new StringBuilder();
         try {
-            while ((line = buffreader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(buffreader, 5_000_000)) != null) {
                 text.append(line);
                 text.append('\n');
             }
