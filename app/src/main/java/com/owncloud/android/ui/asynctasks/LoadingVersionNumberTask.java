@@ -10,6 +10,8 @@ package com.owncloud.android.ui.asynctasks;
 import android.os.AsyncTask;
 
 import com.owncloud.android.lib.common.utils.Log_OC;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class LoadingVersionNumberTask extends AsyncTask<String, Void, Integer> {
     
     protected Integer doInBackground(String... args) {
         try {
-            URL url = new URL(args[0]);
+            URL url = Urls.create(args[0], Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             final Charset charset = Charset.defaultCharset();
             try (BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), charset))) {
                 return Integer.parseInt(in.readLine());
