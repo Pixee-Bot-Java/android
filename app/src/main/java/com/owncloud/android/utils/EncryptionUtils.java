@@ -52,6 +52,7 @@ import com.owncloud.android.lib.resources.status.Problem;
 import com.owncloud.android.lib.resources.status.SendClientDiagnosticRemoteOperation;
 import com.owncloud.android.operations.UploadException;
 import com.owncloud.android.utils.theme.CapabilityUtils;
+import java.nio.file.Files;
 
 import org.apache.commons.httpclient.HttpStatus;
 
@@ -553,7 +554,7 @@ public final class EncryptionUtils {
 
     public static EncryptedFile encryptFile(String accountName, File file, Cipher cipher) throws InvalidParameterSpecException, IOException {
         File tempEncryptedFolder = FileDataStorageManager.createTempEncryptedFolder(accountName);
-        File tempEncryptedFile = File.createTempFile(file.getName(), null, tempEncryptedFolder);
+        File tempEncryptedFile = Files.createTempFile(tempEncryptedFolder.toPath(), file.getName(), null).toFile();
         encryptFileWithGivenCipher(file, tempEncryptedFile, cipher);
         String authenticationTagString = getAuthenticationTag(cipher);
         return new EncryptedFile(tempEncryptedFile, authenticationTagString);
