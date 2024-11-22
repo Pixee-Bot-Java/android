@@ -26,6 +26,7 @@ import com.owncloud.android.db.UploadResult;
 import com.owncloud.android.files.services.NameCollisionPolicy;
 import com.owncloud.android.lib.common.accounts.AccountUtils;
 import com.owncloud.android.operations.UploadFileOperation;
+import java.security.SecureRandom;
 
 import org.junit.After;
 import org.junit.Before;
@@ -200,7 +201,7 @@ public class UploadStorageManagerTest extends AbstractIT {
                                            generateUniqueNumber(),
                                        account.name);
 
-        upload.setFileSize(new Random().nextInt(20000) * 10000);
+        upload.setFileSize(new SecureRandom().nextInt(20000) * 10000);
         upload.setUploadStatus(UploadsStorageManager.UploadStatus.UPLOAD_IN_PROGRESS);
         upload.setLocalAction(2);
         upload.setNameCollisionPolicy(NameCollisionPolicy.ASK_USER);
