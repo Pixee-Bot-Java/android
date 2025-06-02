@@ -199,7 +199,7 @@ public class EncryptionTestIT extends AbstractIT {
             byte[] key = generateKey();
 
             String encryptedString;
-            if (new Random().nextBoolean()) {
+            if (new SecureRandom().nextBoolean()) {
                 encryptedString = EncryptionUtils.encryptStringSymmetricAsString(privateKey, key);
             } else {
                 encryptedString = EncryptionUtils.encryptStringSymmetricAsStringOld(privateKey, key);
@@ -262,7 +262,7 @@ public class EncryptionTestIT extends AbstractIT {
             String privateKeyString = encodeBytesToBase64String(privateKeyBytes);
 
             String encryptedString;
-            if (new Random().nextBoolean()) {
+            if (new SecureRandom().nextBoolean()) {
                 encryptedString = EncryptionUtils.encryptPrivateKey(privateKeyString, keyPhrase);
             } else {
                 encryptedString = EncryptionUtils.encryptPrivateKeyOld(privateKeyString, keyPhrase);
