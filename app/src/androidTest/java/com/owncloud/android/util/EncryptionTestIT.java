@@ -26,6 +26,7 @@ import com.owncloud.android.datamodel.e2e.v1.encrypted.EncryptedFolderMetadataFi
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.e2ee.CsrHelper;
 import com.owncloud.android.utils.EncryptionUtils;
+import java.nio.file.Files;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -831,7 +832,7 @@ public class EncryptionTestIT extends AbstractIT {
 
     private boolean cryptFile(String fileName, String md5, byte[] key, byte[] iv)
         throws Exception {
-        File file = File.createTempFile(fileName, "enc");
+        File file = Files.createTempFile(fileName, "enc").toFile();
         String md5BeforeEncryption = getMD5Sum(file);
 
         // Encryption
@@ -841,7 +842,7 @@ public class EncryptionTestIT extends AbstractIT {
 
         // Decryption
         Cipher decryptorCipher = EncryptionUtils.getCipher(Cipher.DECRYPT_MODE, key, iv);
-        File decryptedFile = File.createTempFile("file", "dec");
+        File decryptedFile = Files.createTempFile("file", "dec").toFile();
         decryptFile(decryptorCipher, file, decryptedFile, encryptorCipherAuthTag, new ArbitraryDataProviderImpl(targetContext), user);
 
         String md5AfterEncryption = getMD5Sum(decryptedFile);
